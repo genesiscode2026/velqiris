@@ -3,40 +3,41 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Velqiris — a fixed-scope, evidence-backed readiness audit for Model Context Protocol servers from Chitara Trading.">
-  <title>Velqiris — release with evidence</title>
+  <meta name="description" content="Velqiris v2.1.0 — deterministic pre-production readiness audit, secret redaction, and SHA-256 evidence bundle for stdio MCP servers, by Chitara Trading.">
+  <title>Velqiris — Release Evidence for MCP Servers | Chitara Trading</title>
   <style>
-    :root { --ink:#10211f; --muted:#5a716d; --paper:#f5f8f5; --card:#ffffff; --line:#d9e5df; --green:#0f6b53; --mint:#d8f1e5; --gold:#c58a39; }
+    :root { --ink:#10211f; --muted:#5a716d; --paper:#f5f8f5; --card:#ffffff; --line:#d9e5df; --green:#0f6b53; --mint:#d8f1e5; --gold:#c58a39; --codebg:#0c1816; }
     * { box-sizing:border-box; }
     body { margin:0; font-family: Inter, ui-sans-serif, system-ui, -apple-system, sans-serif; color:var(--ink); background:var(--paper); line-height:1.55; }
     a { color:inherit; }
+    code, pre { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; }
     .wrap { max-width:1120px; margin:0 auto; padding:0 28px; }
-    header { padding:22px 0; border-bottom:1px solid var(--line); background:rgba(245,248,245,.9); }
+    header { padding:20px 0; border-bottom:1px solid var(--line); background:rgba(245,248,245,.95); position:sticky; top:0; z-index:10; backdrop-filter:blur(8px); }
     .nav { display:flex; justify-content:space-between; align-items:center; gap:24px; }
-    .brand { display:flex; align-items:center; gap:10px; font-weight:760; letter-spacing:-.02em; }
+    .brand { display:flex; align-items:center; gap:10px; font-weight:760; letter-spacing:-.02em; font-size:17px; }
     .mark { width:28px; height:28px; border-radius:9px; background:var(--green); display:grid; place-items:center; color:#fff; font-size:14px; }
     .nav a { text-decoration:none; font-size:14px; color:var(--muted); }
     .nav-links { display:flex; gap:20px; align-items:center; }
-    .nav-cta { padding:9px 14px; border:1px solid var(--green); border-radius:999px; color:var(--green)!important; font-weight:650; }
-    .hero { padding:92px 0 80px; display:grid; grid-template-columns:1.12fr .88fr; gap:64px; align-items:center; }
+    .nav-cta { padding:9px 15px; border:1px solid var(--green); border-radius:999px; color:var(--green)!important; font-weight:650; }
+    .hero { padding:84px 0 72px; display:grid; grid-template-columns:1.1fr .9fr; gap:56px; align-items:center; }
     .eyebrow { color:var(--green); font-size:12px; letter-spacing:.14em; text-transform:uppercase; font-weight:800; }
-    h1 { font-size:clamp(44px,7vw,76px); line-height:.98; letter-spacing:-.065em; margin:18px 0 24px; max-width:720px; }
-    .lead { color:var(--muted); font-size:20px; max-width:650px; margin:0 0 30px; }
+    h1 { font-size:clamp(42px,6.2vw,70px); line-height:.99; letter-spacing:-.06em; margin:16px 0 22px; max-width:680px; }
+    .lead { color:var(--muted); font-size:19px; max-width:630px; margin:0 0 28px; }
     .actions { display:flex; flex-wrap:wrap; gap:12px; align-items:center; }
-    .button { display:inline-flex; align-items:center; justify-content:center; padding:14px 20px; border-radius:10px; text-decoration:none; font-weight:750; border:1px solid var(--green); }
+    .button { display:inline-flex; align-items:center; justify-content:center; padding:14px 20px; border-radius:10px; text-decoration:none; font-weight:720; border:1px solid var(--green); cursor:pointer; font-size:15px; }
     .button.primary { background:var(--green); color:#fff; box-shadow:0 10px 24px rgba(15,107,83,.18); }
     .button.secondary { color:var(--green); background:transparent; }
     .note { color:var(--muted); font-size:13px; margin-top:15px; }
     .proof-card { background:var(--ink); color:#e9f6ef; padding:26px; border-radius:20px; box-shadow:0 24px 60px rgba(16,33,31,.18); }
     .proof-top { display:flex; justify-content:space-between; color:#a7c4b7; font-size:12px; text-transform:uppercase; letter-spacing:.1em; }
-    .score { margin:34px 0 28px; display:flex; align-items:end; gap:13px; }
-    .score strong { font-size:66px; line-height:.8; letter-spacing:-.08em; color:#fff; }
-    .score span { color:#a7c4b7; font-size:14px; }
-    .check { display:flex; justify-content:space-between; border-top:1px solid rgba(233,246,239,.16); padding:13px 0; font-size:14px; }
+    .score { margin:28px 0 22px; display:flex; align-items:end; gap:13px; }
+    .score strong { font-size:58px; line-height:.85; letter-spacing:-.07em; color:#fff; }
+    .score span { color:#a7c4b7; font-size:13px; }
+    .check { display:flex; justify-content:space-between; border-top:1px solid rgba(233,246,239,.14); padding:11px 0; font-size:13.5px; }
     .pass { color:#8ce0b4; font-weight:750; }
-    section { padding:76px 0; }
-    .section-head { max-width:670px; margin-bottom:34px; }
-    h2 { font-size:clamp(30px,4vw,48px); line-height:1.03; letter-spacing:-.05em; margin:10px 0 14px; }
+    section { padding:68px 0; }
+    .section-head { max-width:720px; margin-bottom:32px; }
+    h2 { font-size:clamp(28px,4vw,44px); line-height:1.05; letter-spacing:-.045em; margin:10px 0 12px; }
     .section-head p { color:var(--muted); font-size:17px; margin:0; }
     .grid { display:grid; grid-template-columns:repeat(3,1fr); gap:16px; }
     .card { background:var(--card); border:1px solid var(--line); padding:24px; border-radius:16px; }
@@ -44,56 +45,237 @@
     .card h3 { margin:12px 0 8px; font-size:19px; letter-spacing:-.02em; }
     .card p { margin:0; color:var(--muted); font-size:15px; }
     .band { background:var(--mint); }
-    .checks { display:grid; grid-template-columns:1fr 1fr; gap:0 42px; }
-    .check-row { display:flex; gap:14px; padding:18px 0; border-bottom:1px solid rgba(15,107,83,.18); }
-    .check-row b { min-width:150px; font-size:14px; }
+    .checks { display:grid; grid-template-columns:1fr 1fr; gap:0 40px; }
+    .check-row { display:flex; gap:14px; padding:16px 0; border-bottom:1px solid rgba(15,107,83,.18); }
+    .check-row b { min-width:170px; font-size:13.5px; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; }
     .check-row span { color:var(--muted); font-size:14px; }
+    .tabs { display:flex; gap:8px; margin-bottom:14px; flex-wrap:wrap; }
+    .tab-btn { border:1px solid var(--line); background:#fff; color:var(--ink); padding:8px 14px; border-radius:8px; font-size:13px; font-weight:650; cursor:pointer; }
+    .tab-btn.active { background:var(--ink); color:#fff; border-color:var(--ink); }
+    pre.sample { background:var(--codebg); color:#dff4e8; padding:22px; border-radius:14px; overflow-x:auto; font-size:13px; line-height:1.55; margin:0; border:1px solid rgba(255,255,255,.08); }
+    .hidden { display:none; }
     .offer { display:grid; grid-template-columns:1fr 1fr; gap:18px; align-items:stretch; }
     .price { background:var(--ink); color:#f5fff8; border-radius:18px; padding:30px; display:flex; flex-direction:column; }
     .price .tag { color:#9edcc0; text-transform:uppercase; font-size:12px; letter-spacing:.14em; font-weight:800; }
-    .price h3 { font-size:30px; letter-spacing:-.05em; margin:14px 0 7px; }
-    .amount { font-size:44px; letter-spacing:-.06em; font-weight:800; margin:10px 0 20px; }
-    .price p { color:#b5cec3; margin:0 0 18px; }
-    .price ul { padding-left:20px; color:#e3f3ea; margin:0 0 28px; }
-    .price li { margin:8px 0; }
+    .price h3 { font-size:28px; letter-spacing:-.04em; margin:12px 0 7px; }
+    .amount { font-size:44px; letter-spacing:-.06em; font-weight:800; margin:10px 0 18px; }
+    .price p { color:#b5cec3; margin:0 0 16px; }
+    .price ul { padding-left:20px; color:#e3f3ea; margin:0 0 24px; }
+    .price li { margin:7px 0; font-size:15px; }
     .price .button { margin-top:auto; background:#f5fff8; border-color:#f5fff8; color:var(--ink); }
-    .payment-note { margin-top:16px; padding:12px 14px; border:1px solid rgba(15,107,83,.22); border-radius:10px; color:var(--muted); font-size:13px; background:#f8fcf9; }
-    .boundaries { background:#fff; border:1px solid var(--line); border-radius:18px; padding:30px; }
-    .boundaries h3 { margin-top:0; font-size:22px; }
+    .payment-note { margin-top:14px; padding:12px 14px; border:1px solid rgba(255,255,255,.16); border-radius:10px; color:#c8dfd4; font-size:12.5px; background:rgba(255,255,255,.04); }
+    .boundaries { background:#fff; border:1px solid var(--line); border-radius:18px; padding:30px; display:flex; flex-direction:column; }
+    .boundaries .tag { color:var(--gold); text-transform:uppercase; font-size:12px; letter-spacing:.14em; font-weight:800; margin-bottom:10px; }
+    .boundaries h3 { margin:0 0 12px; font-size:24px; }
     .boundaries p, .boundaries li { color:var(--muted); font-size:15px; }
+    .boundaries .button { margin-top:auto; }
     footer { border-top:1px solid var(--line); padding:30px 0 46px; color:var(--muted); font-size:13px; }
     .footer-row { display:flex; justify-content:space-between; gap:20px; flex-wrap:wrap; }
-    @media (max-width:800px) { .hero, .offer { grid-template-columns:1fr; gap:36px; padding-top:64px; } .grid, .checks { grid-template-columns:1fr; } .nav-links a:not(.nav-cta) { display:none; } h1 { font-size:54px; } }
+    @media (max-width:860px) { .hero, .offer { grid-template-columns:1fr; gap:32px; padding-top:52px; } .grid, .checks { grid-template-columns:1fr; } .nav-links a:not(.nav-cta) { display:none; } h1 { font-size:46px; } }
   </style>
 </head>
 <body>
-  <header><div class="wrap nav"><div class="brand"><span class="mark">✓</span> Velqiris</div><nav class="nav-links"><a href="#how">How it works</a><a href="#offer">Offer</a><a class="nav-cta" href="https://x402git.com/genesiscode2026/genesis-mcp-production-readiness" rel="noopener">Buy 79 USDC</a></nav></div></header>
+  <header>
+    <div class="wrap nav">
+      <div class="brand"><span class="mark">✓</span> Velqiris</div>
+      <nav class="nav-links">
+        <a href="#how">How it works</a>
+        <a href="#checks">9 Checks</a>
+        <a href="#evidence">Sample Output</a>
+        <a href="#offer">Offer</a>
+        <a class="nav-cta" href="https://x402git.com/genesiscode2026/genesis-mcp-production-readiness" rel="noopener">Buy 79 USDC</a>
+      </nav>
+    </div>
+  </header>
+
   <main>
     <div class="wrap hero">
       <div>
-        <div class="eyebrow">Release evidence for MCP teams</div>
+        <div class="eyebrow">Release Evidence for MCP Teams · Chitara Trading</div>
         <h1>Ship your MCP server with evidence, not hope.</h1>
-        <p class="lead">A fixed-scope readiness audit that tests the observable protocol surface before your server reaches an internal agent, a customer, or a procurement review.</p>
-        <div class="actions"><a class="button primary" href="https://x402git.com/genesiscode2026/genesis-mcp-production-readiness" rel="noopener">Buy the v2.0.0 package · 79 USDC</a><a class="button secondary" href="#offer">See exactly what arrives →</a></div>
-        <div class="note">Fixed price · USDC on Base · automatic signed download after settlement.</div>
+        <p class="lead">Zero-dependency Node.js conformance harness and bounded static audit for stdio Model Context Protocol servers. Generates a SHA-256 evidence bundle in under 500ms for CI gates and procurement reviews.</p>
+        <div class="actions">
+          <a class="button primary" href="https://x402git.com/genesiscode2026/genesis-mcp-production-readiness" rel="noopener">Buy v2.1.0 · 79 USDC</a>
+          <a class="button secondary" href="#evidence">Inspect real output →</a>
+        </div>
+        <div class="note">Fixed price · USDC on Base (eip155:8453) · automatic signed download via X402 Git · Chitara Trading.</div>
       </div>
-      <div class="proof-card" aria-label="Example readiness report">
-        <div class="proof-top"><span>Example report</span><span>v1 contract</span></div>
-        <div class="score"><strong>PASS</strong><span>release evidence<br>velqiris-report/v1</span></div>
-        <div class="check"><span>Protocol handshake</span><span class="pass">PASS</span></div>
-        <div class="check"><span>Tool schemas</span><span class="pass">PASS</span></div>
-        <div class="check"><span>Unknown-tool handling</span><span class="pass">PASS</span></div>
-        <div class="check"><span>Concurrent requests</span><span class="pass">PASS</span></div>
-        <div class="check"><span>Secret-pattern audit</span><span class="pass">PASS</span></div>
+
+      <div class="proof-card" aria-label="Sample readiness report">
+        <div class="proof-top"><span>Real harness output</span><span>Velqiris v2.1.0</span></div>
+        <div class="score"><strong>PASS</strong><span>9/9 runtime checks<br>SHA-256 manifest verified</span></div>
+        <div class="check"><span>PROC_START &amp; PROTO_INIT</span><span class="pass">PASS</span></div>
+        <div class="check"><span>TOOLS_SCHEMA &amp; TOOL_RISK_REVIEW</span><span class="pass">PASS</span></div>
+        <div class="check"><span>UNKNOWN_TOOL &amp; CONCURRENCY</span><span class="pass">PASS</span></div>
+        <div class="check"><span>PROTOCOL_PURITY &amp; CAPTURE_BOUNDS</span><span class="pass">PASS</span></div>
+        <div class="check"><span>SECRET_EXPOSURE (10 patterns)</span><span class="pass">PASS</span></div>
       </div>
     </div>
 
-    <section id="how"><div class="wrap"><div class="section-head"><div class="eyebrow">A bounded decision</div><h2>Turn release anxiety into a signed-off next step.</h2><p>The audit is designed for the moment a team needs a credible answer: release, remediate, or stop.</p></div><div class="grid"><div class="card"><div class="num">01 / INPUT</div><h3>One reproducible command</h3><p>You provide the MCP server command and a non-production test environment. No broad source-code handover is required.</p></div><div class="card"><div class="num">02 / AUDIT</div><h3>Six high-signal checks</h3><p>The harness exercises handshake, schemas, fault handling, concurrency, and captured output with deterministic evidence.</p></div><div class="card"><div class="num">03 / DECISION</div><h3>Report plus remediation review</h3><p>You receive a versioned JSON report, scorecard, prioritized next actions, and one review after a new build.</p></div></div></div></section>
+    <section id="how">
+      <div class="wrap">
+        <div class="section-head">
+          <div class="eyebrow">A bounded engineering gate</div>
+          <h2>Turn MCP release anxiety into a deterministic pass/fail step.</h2>
+          <p>Built for engineering teams and CI pipelines that need reproducible protocol proof before exposing an internal agent or customer workflow to an MCP server.</p>
+        </div>
+        <div class="grid">
+          <div class="card">
+            <div class="num">01 / SPAWN</div>
+            <h3>Direct stdio without a shell</h3>
+            <p>Spawns your Node, Python, Go, or Rust MCP binary directly (<code>shell: false</code>), supporting forwarded server flags such as <code>--stdio</code> or <code>--port=3000</code>.</p>
+          </div>
+          <div class="card">
+            <div class="num">02 / AUDIT</div>
+            <h3>9 runtime + static rules</h3>
+            <p>Drives MCP handshake, schema validation, unknown-tool rejection, concurrent request correlation, stdout purity, and secret redaction across 10 credential classes.</p>
+          </div>
+          <div class="card">
+            <div class="num">03 / BUNDLE</div>
+            <h3>SHA-256 evidence artifacts</h3>
+            <p>Writes <code>report.json</code>, <code>report.md</code>, and <code>manifest.sha256.json</code> (with <code>0700</code>/<code>0600</code> permissions) and exits <code>0</code>, <code>1</code>, or <code>2</code> for CI automation.</p>
+          </div>
+        </div>
+      </div>
+    </section>
 
-    <section class="band"><div class="wrap"><div class="section-head"><div class="eyebrow">What is actually tested</div><h2>Concrete checks your release process can reuse.</h2></div><div class="checks"><div class="check-row"><b>PROC_START</b><span>Process startup and clean stdio binding.</span></div><div class="check-row"><b>PROTO_INIT</b><span>Initialize response, capabilities, and protocol negotiation.</span></div><div class="check-row"><b>TOOLS_SCHEMA</b><span>Tool names, uniqueness, and inputSchema structure.</span></div><div class="check-row"><b>ERROR_HANDLING</b><span>Unknown-tool rejection with JSON-RPC semantics.</span></div><div class="check-row"><b>CONCURRENCY_LOAD</b><span>Parallel requests with matching response IDs.</span></div><div class="check-row"><b>SECRET_AUDIT</b><span>Credential-like patterns in stdout and stderr, redacted.</span></div></div></div></section>
+    <section id="checks" class="band">
+      <div class="wrap">
+        <div class="section-head">
+          <div class="eyebrow">Exact checks emitted</div>
+          <h2>Every check ID matches the verified v2.1.0 codebase.</h2>
+          <p>Zero external npm runtime dependencies — runs purely on Node.js &gt;= 20 built-ins.</p>
+        </div>
+        <div class="checks">
+          <div class="check-row"><b>PROC_START</b><span>Direct process spawn (<code>shell: false</code>) and startup grace verification.</span></div>
+          <div class="check-row"><b>PROTO_INIT</b><span><code>initialize</code> negotiation, <code>notifications/initialized</code>, and server identity capture.</span></div>
+          <div class="check-row"><b>TOOLS_SCHEMA</b><span>Tool name uniqueness and JSON <code>inputSchema</code> / <code>required</code> validation.</span></div>
+          <div class="check-row"><b>TOOL_RISK_REVIEW</b><span>Flags high-impact metadata keywords (funds movement, shell exec, writes, credentials).</span></div>
+          <div class="check-row"><b>UNKNOWN_TOOL</b><span>Verifies JSON-RPC error response for nonexistent tool calls.</span></div>
+          <div class="check-row"><b>CONCURRENCY</b><span>Fires parallel <code>ping</code> &amp; <code>tools/list</code> requests checking ID correlation and envelopes.</span></div>
+          <div class="check-row"><b>PROTOCOL_PURITY</b><span>Captures and flags non-JSON lines on stdout that corrupt stdio framing.</span></div>
+          <div class="check-row"><b>SECRET_EXPOSURE</b><span>Detects &amp; redacts Anthropic, OpenAI, GitHub, AWS, Slack, Stripe, Postgres URI, private keys, Bearer, and JWTs.</span></div>
+          <div class="check-row"><b>CAPTURE_BOUNDS</b><span>Enforces bounded capture limits and safe UTF-8 stream decoding.</span></div>
+          <div class="check-row"><b>STATIC_SCAN</b><span>Optional <code>--source</code> audit (<code>COMMAND_EXEC</code>, <code>SHELL_TRUE</code>, <code>DYNAMIC_EVAL</code>, <code>UNBOUNDED_FS_WRITE</code>, <code>HTTP_WITHOUT_TIMEOUT</code>) with <code>&lt;source-root&gt;</code> path normalization.</span></div>
+        </div>
+      </div>
+    </section>
 
-    <section id="offer"><div class="wrap"><div class="section-head"><div class="eyebrow">Self-serve first</div><h2>One product, two safe ways to buy.</h2></div><div class="offer"><div class="price"><div class="tag">Velqiris v2.0.0</div><h3>Download the assurance harness</h3><div class="amount">79 USDC</div><p>Fixed Base price for the verified package. No currency conversion and no manual invoice.</p><ul><li>Automated X402 settlement</li><li>Signed release download</li><li>Security scan passed</li><li>Versioned evidence artifacts</li><li>Future updates: 15 USDC</li></ul><a class="button" href="https://x402git.com/genesiscode2026/genesis-mcp-production-readiness" rel="noopener">Open secure checkout</a><div class="payment-note">The checkout handles payment verification and delivery. The payment platform holds net proceeds for its stated settlement period, then sweeps them automatically to the payout wallet bound to the seller account.</div></div><div class="boundaries"><h3>Assisted pilot</h3><p>For teams that want us to run the audit against one server, the fixed-scope pilot remains available at <strong>€490</strong>.</p><p>This is an engineering assurance review of the observable stdio protocol surface. It is not a legal certification, penetration test, dependency guarantee, or promise of zero vulnerabilities.</p><p><strong>To start:</strong> send the server command, runtime details, expected protocol version, and a non-production test setup.</p><p><a class="button secondary" href="mailto:chitara.trading@proton.me?subject=Velqiris%20pilot">Request the assisted pilot</a></p></div></div></div></section>
+    <section id="evidence">
+      <div class="wrap">
+        <div class="section-head">
+          <div class="eyebrow">Inspect before you buy</div>
+          <h2>Verbatim artifacts generated by Velqiris v2.1.0.</h2>
+          <p>Switch tabs below to inspect the real CLI invocation, SHA-256 manifest, and GitHub Actions CI step.</p>
+        </div>
+        <div class="tabs" role="tablist">
+          <button class="tab-btn active" type="button" data-tab="cli">CLI &amp; JSON Output</button>
+          <button class="tab-btn" type="button" data-tab="manifest">manifest.sha256.json</button>
+          <button class="tab-btn" type="button" data-tab="ci">GitHub Actions Gate</button>
+        </div>
+        <pre id="tab-cli" class="sample">$ velqiris --command node --arg ./examples/safe-server.js --source ./src --output ./velqiris-evidence --json
+{
+  "schemaVersion": "1.0",
+  "product": { "name": "Velqiris", "version": "2.1.0" },
+  "disposition": "PASS",
+  "runtime": {
+    "overallStatus": "PASS",
+    "summary": { "passed": 9, "failed": 0, "warned": 0, "total": 9 }
+  },
+  "staticAnalysis": {
+    "status": "PASS",
+    "root": "&lt;source-root&gt;",
+    "summary": { "scannedFiles": 5, "findings": 2, "highImpact": 0 }
+  }
+}</pre>
+        <pre id="tab-manifest" class="sample hidden">{
+  "algorithm": "sha256",
+  "generatedAt": "2026-11-17T20:26:31.720Z",
+  "files": {
+    "report.json": {
+      "sha256": "2179a409bc10c0b58d0e042c992cdb43913f639de1a156883ef05e172db46211",
+      "bytes": 4320
+    },
+    "report.md": {
+      "sha256": "e99629bb431347b249d22d487ec416ab0f6a8a4a6e627d6b0c493e501ab7da2d",
+      "bytes": 2500
+    }
+  }
+}</pre>
+        <pre id="tab-ci" class="sample hidden">name: MCP Release Gate
+on: [push, pull_request]
+jobs:
+  velqiris-audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Run Velqiris v2.1.0 MCP Readiness Audit
+        run: node ./bin/chitara-mcp-assure.js --command node --arg ./dist/server.js --arg --stdio --source ./src --fail-on-review --json</pre>
+      </div>
+    </section>
+
+    <section id="offer">
+      <div class="wrap">
+        <div class="section-head">
+          <div class="eyebrow">Transparent commercial structure</div>
+          <h2>Self-service source license, or human-executed pilot.</h2>
+          <p>Clear separation between instant automated software delivery and hands-on engineering review.</p>
+        </div>
+        <div class="offer">
+          <div class="price">
+            <div class="tag">Velqiris v2.1.0 · Self-Service</div>
+            <h3>Download the full assurance harness</h3>
+            <div class="amount">79 USDC</div>
+            <p>Instant zero-touch purchase on Base Mainnet (<code>eip155:8453</code>). Full source repository, CLI binaries, 7-test Node suite, and SHA-256 evidence bundler.</p>
+            <ul>
+              <li>Automated X402 settlement (humans &amp; AI agents)</li>
+              <li>Signed <code>.zip</code> delivery valid immediately after payment</li>
+              <li>Public pre-purchase manifest &amp; security scan verdict</li>
+              <li>Commercial internal-use license (Chitara Trading)</li>
+              <li>Subsequent releases: 15 USDC</li>
+            </ul>
+            <a class="button" href="https://x402git.com/genesiscode2026/genesis-mcp-production-readiness" rel="noopener">Open X402 checkout (79 USDC)</a>
+            <div class="payment-note">
+              <strong>Settlement note:</strong> X402 Git collects USDC on Base via EIP-3009 and sweeps net seller proceeds on its published 7-day cycle. Free public manifest: <code>x402git.com/api/label/genesiscode2026/genesis-mcp-production-readiness</code>.
+            </div>
+          </div>
+
+          <div class="boundaries">
+            <div class="tag">Human-Executed Engineering Service</div>
+            <h3>Assisted MCP audit pilot</h3>
+            <p>Fixed-scope review at <strong>€490</strong> (or USDC equivalent on Base). Because this involves inspecting your real server behavior, this option is <strong>manually executed</strong> by Chitara Trading rather than automated.</p>
+            <ul>
+              <li>We run Velqiris against one non-production MCP server build</li>
+              <li>Manual review of high-risk tools (`TOOL_RISK_REVIEW`) &amp; static findings</li>
+              <li>Signed evidence dossier + one follow-up verification after fixes</li>
+            </ul>
+            <p><strong>Scope boundary:</strong> bounded technical assurance of the local stdio protocol surface; not a legal certification, formal pentest, or warranty.</p>
+            <a class="button secondary" href="mailto:chitara.trading@proton.me?subject=Velqiris%20Assisted%20Pilot">Request assisted pilot · chitara.trading@proton.me</a>
+          </div>
+        </div>
+      </div>
+    </section>
   </main>
-  <footer><div class="wrap footer-row"><span>© Chitara Trading · Velqiris v2.0.0</span><span><a href="mailto:chitara.trading@proton.me">chitara.trading@proton.me</a> · Evidence before release.</span></div></footer>
+
+  <footer>
+    <div class="wrap footer-row">
+      <span>© Chitara Trading · Velqiris v2.1.0</span>
+      <span><a href="mailto:chitara.trading@proton.me">chitara.trading@proton.me</a> · Evidence before release.</span>
+    </div>
+  </footer>
+
+  <script>
+    document.querySelectorAll('.tab-btn').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.tab-btn').forEach((b) => b.classList.remove('active'));
+        document.querySelectorAll('pre.sample').forEach((p) => p.classList.add('hidden'));
+        btn.classList.add('active');
+        document.getElementById('tab-' + btn.dataset.tab).classList.remove('hidden');
+      });
+    });
+  </script>
 </body>
 </html>
