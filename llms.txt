@@ -1,0 +1,21 @@
+# Velqiris (Chitara Trading)
+
+> Deterministic pre-production MCP stdio conformance harness, secret redactor, bounded static scanner, and SHA-256 evidence bundler (`v2.1.2`). Zero runtime npm dependencies (Node.js >= 20).
+
+## Links
+- Landing page & real benchmarks: https://genesiscode2026.github.io/velqiris/
+- Self-service checkout (79 USDC on Base Mainnet `eip155:8453`, instant signed `.zip` via X402): https://x402git.com/genesiscode2026/genesis-mcp-production-readiness
+- Free pre-purchase machine manifest (file tree, sizes, scan verdict, SHA-256): https://x402git.com/api/label/genesiscode2026/genesis-mcp-production-readiness
+- X402 machine paywall endpoint: https://x402git.com/api/r/genesiscode2026/genesis-mcp-production-readiness
+- Human-executed assisted pilot (€490): mailto:chitara.trading@proton.me
+
+## 9 Runtime Checks
+- `PROC_START`: Direct spawn (`shell: false`) without shell interpolation
+- `PROTO_INIT`: MCP `initialize` & `notifications/initialized` handshake
+- `TOOLS_SCHEMA`: Unique tool names & JSON `inputSchema` / `required` checks
+- `TOOL_RISK_REVIEW`: Metadata flags for high-impact tools
+- `UNKNOWN_TOOL`: JSON-RPC error validation for nonexistent tool invocation
+- `CONCURRENCY`: Parallel request ID correlation and envelope check
+- `PROTOCOL_PURITY`: Flags non-JSON stdout framing corruption
+- `SECRET_EXPOSURE`: Detects & redacts 10 credential classes (Anthropic, OpenAI, GitHub, AWS, Slack, Stripe, Postgres URI, private keys, Bearer, JWT)
+- `CAPTURE_BOUNDS`: Bounded capture & `StringDecoder('utf8')` safety

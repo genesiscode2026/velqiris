@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://genesiscode2026.github.io/velqiris/sitemap.xml
