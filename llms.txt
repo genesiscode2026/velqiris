@@ -1,21 +1,22 @@
-# Velqiris (Chitara Trading)
+# Velqiris Release Gate (Chitara Trading)
 
-> Deterministic pre-production MCP stdio conformance harness, secret redactor, bounded static scanner, and SHA-256 evidence bundler (`v2.1.2`). Zero runtime npm dependencies (Node.js >= 20).
+> Run the release gate on your MCP server for free in GitHub Actions (`uses: genesiscode2026/velqiris@v1`), then buy the signed SHA-256 evidence bundle (`v2.2.0`, 79 USDC on Base) only when you need release proof. Zero runtime npm dependencies (Node.js >= 20).
 
-## Links
-- Landing page & real benchmarks: https://genesiscode2026.github.io/velqiris/
-- Self-service checkout (79 USDC on Base Mainnet `eip155:8453`, instant signed `.zip` via X402): https://x402git.com/genesiscode2026/genesis-mcp-production-readiness
+## Product & Funnel Links
+- Landing page, copy-paste GitHub Action & real benchmarks: https://genesiscode2026.github.io/velqiris/
+- Copy-paste free workflow example: https://genesiscode2026.github.io/velqiris/examples/velqiris-release-gate.yml
+- Funnel telemetry JSON schema (zero PII): https://genesiscode2026.github.io/velqiris/telemetry/funnel-schema.json
+- Self-service commercial bundle checkout (79 USDC on Base Mainnet `eip155:8453`, instant signed `.zip` via X402 Git): https://x402git.com/genesiscode2026/genesis-mcp-production-readiness
 - Free pre-purchase machine manifest (file tree, sizes, scan verdict, SHA-256): https://x402git.com/api/label/genesiscode2026/genesis-mcp-production-readiness
 - X402 machine paywall endpoint: https://x402git.com/api/r/genesiscode2026/genesis-mcp-production-readiness
-- Human-executed assisted pilot (€490): mailto:chitara.trading@proton.me
+- Human-executed assisted pilot (€490 fixed scope): mailto:chitara.trading@proton.me
 
-## 9 Runtime Checks
-- `PROC_START`: Direct spawn (`shell: false`) without shell interpolation
-- `PROTO_INIT`: MCP `initialize` & `notifications/initialized` handshake
-- `TOOLS_SCHEMA`: Unique tool names & JSON `inputSchema` / `required` checks
-- `TOOL_RISK_REVIEW`: Metadata flags for high-impact tools
-- `UNKNOWN_TOOL`: JSON-RPC error validation for nonexistent tool invocation
-- `CONCURRENCY`: Parallel request ID correlation and envelope check
-- `PROTOCOL_PURITY`: Flags non-JSON stdout framing corruption
-- `SECRET_EXPOSURE`: Detects & redacts 10 credential classes (Anthropic, OpenAI, GitHub, AWS, Slack, Stripe, Postgres URI, private keys, Bearer, JWT)
-- `CAPTURE_BOUNDS`: Bounded capture & `StringDecoder('utf8')` safety
+## Dual-Tier Split
+- Free Public Gate (`genesiscode2026/velqiris@v1`): stdio runtime gate (`PROC_START`, `PROTO_INIT`, `TOOLS_SCHEMA`, `TOOL_RISK_REVIEW`, `UNKNOWN_TOOL`, `CONCURRENCY`, `PROTOCOL_PURITY`, `CAPTURE_BOUNDS`) with `PASS` / `REVIEW` / `FAIL` summary.
+- Commercial Signed Bundle (`v2.2.0`, 79 USDC): adds composite GitHub Action uploading `report.json`, `report.md`, and `manifest.sha256.json`, 10-class secret redaction (`anthropic-key`, `openai-key`, `github-token`, `aws-access-key`, `slack-token`, `stripe-key`, `postgres-uri`, `private-key`, `bearer-token`, `jwt`), bounded static source scan (`--source`), local funnel event logging, and Chitara Trading internal commercial license.
+
+## Payment & Delivery Separation
+- Artifact delivery: immediate authenticated `.zip` authorization on X402 Git upon HTTP 402 payment completion.
+- Platform settlement: USDC on Base (`eip155:8453`) to X402 Git receiver `0xDbd32F7565FFdb901Ea48281777aD03d35bB4b60`.
+- Payout wallet: `0xC6F86e170411182114FcCdb28793dC76B5e8D144`.
+- Platform sweep window: 90% net proceeds swept on X402 Git's published 7-day settlement cycle.

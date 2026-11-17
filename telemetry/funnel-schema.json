@@ -1,0 +1,68 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://genesiscode2026.github.io/velqiris/telemetry/funnel-schema.json",
+  "title": "Velqiris Release Gate Funnel Event",
+  "description": "Zero-PII funnel measurement schema covering page_view -> gate_run -> checkout_open -> settlement_verified.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "event",
+    "campaign_id",
+    "surface",
+    "tier",
+    "status",
+    "timestamp_utc"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "const": "1.0"
+    },
+    "event": {
+      "type": "string",
+      "enum": [
+        "page_view",
+        "gate_run",
+        "checkout_open",
+        "settlement_verified"
+      ]
+    },
+    "campaign_id": {
+      "type": "string",
+      "pattern": "^[a-zA-Z0-9._:/-]{1,80}$"
+    },
+    "surface": {
+      "type": "string",
+      "enum": [
+        "landing-page",
+        "github-action",
+        "cli",
+        "x402-checkout",
+        "base-settlement"
+      ]
+    },
+    "tier": {
+      "type": "string",
+      "enum": [
+        "free-gate",
+        "commercial-bundle",
+        "assisted-pilot"
+      ]
+    },
+    "status": {
+      "type": "string",
+      "maxLength": 80
+    },
+    "timestamp_utc": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "metadata": {
+      "type": "object",
+      "description": "Bounded non-personal counters/flags only. Never stores emails, IPs, names, wallet addresses, or raw repository logs.",
+      "additionalProperties": {
+        "type": ["string", "number", "boolean"]
+      }
+    }
+  }
+}

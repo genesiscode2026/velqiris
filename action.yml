@@ -1,0 +1,83 @@
+name: "Velqiris Release Gate"
+description: "Free local-first MCP stdio runtime release gate (PASS / REVIEW / FAIL) by Chitara Trading. Upgrade to the commercial bundle for static audit, 10-pattern secret redaction, and signed SHA-256 evidence."
+author: "Chitara Trading"
+branding:
+  icon: "shield"
+  color: "green"
+
+inputs:
+  command:
+    description: "Executable command to launch the MCP stdio server (spawned with shell: false)"
+    required: true
+  args:
+    description: "Optional forwarded arguments (whitespace or newline separated; supports flags starting with --)"
+    required: false
+    default: ""
+  source:
+    description: "Optional source directory path (full bounded static source audit is included in the commercial bundle)"
+    required: false
+    default: ""
+  output:
+    description: "Directory where gate-summary.json, gate-summary.md, and local funnel-events.jsonl are written"
+    required: false
+    default: "velqiris-gate-summary"
+  fail-on-review:
+    description: "Set to true to exit 1 when disposition is REVIEW as well as FAIL"
+    required: false
+    default: "false"
+  campaign-id:
+    description: "Neutral funnel campaign identifier (zero PII)"
+    required: false
+    default: "velqiris-release-gate-v1"
+
+outputs:
+  disposition:
+    description: "Gate verdict: PASS, REVIEW, or FAIL"
+    value: ${{ steps.gate.outputs.disposition }}
+  passed:
+    description: "Number of passing runtime checks"
+    value: ${{ steps.gate.outputs.passed }}
+  warned:
+    description: "Number of warning runtime checks"
+    value: ${{ steps.gate.outputs.warned }}
+  failed:
+    description: "Number of failing runtime checks"
+    value: ${{ steps.gate.outputs.failed }}
+  total:
+    description: "Total runtime checks executed"
+    value: ${{ steps.gate.outputs.total }}
+  output-dir:
+    description: "Resolved summary directory"
+    value: ${{ steps.gate.outputs.output-dir }}
+  summary-path:
+    description: "Path to gate-summary.json"
+    value: ${{ steps.gate.outputs.summary-path }}
+  telemetry-path:
+    description: "Path to non-PII local funnel-events.jsonl"
+    value: ${{ steps.gate.outputs.telemetry-path }}
+
+runs:
+  using: "composite"
+  steps:
+    - name: Run Velqiris Free Release Gate
+      id: gate
+      shell: bash
+      env:
+        INPUT_COMMAND: ${{ inputs.command }}
+        INPUT_ARGS: ${{ inputs.args }}
+        INPUT_SOURCE: ${{ inputs.source }}
+        INPUT_OUTPUT: ${{ inputs.output }}
+        INPUT_FAIL_ON_REVIEW: ${{ inputs.fail-on-review }}
+        INPUT_CAMPAIGN_ID: ${{ inputs.campaign-id }}
+      run: node "${{ github.action_path }}/gate/action-runner.js"
+
+    - name: Upload Velqiris Gate Summary
+      if: always() && steps.gate.outputs.output-dir != ''
+      uses: actions/upload-artifact@v4
+      with:
+        name: velqiris-gate-summary
+        path: |
+          ${{ steps.gate.outputs.output-dir }}/gate-summary.json
+          ${{ steps.gate.outputs.output-dir }}/gate-summary.md
+        if-no-files-found: warn
+        retention-days: 14

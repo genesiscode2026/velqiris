@@ -1,0 +1,29 @@
+name: Velqiris MCP Release Gate
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  mcp-release-gate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      - name: Build your MCP server
+        run: npm ci && npm run build
+
+      - name: Run Velqiris Free Release Gate
+        uses: genesiscode2026/velqiris@v1
+        with:
+          command: node
+          args: ./dist/server.js --stdio
+          output: ./velqiris-gate-summary
+          fail-on-review: "false"

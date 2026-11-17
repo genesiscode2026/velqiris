@@ -10,4 +10,14 @@
     <lastmod>2026-11-17</lastmod>
     <priority>0.8</priority>
   </url>
+  <url>
+    <loc>https://genesiscode2026.github.io/velqiris/telemetry/funnel-schema.json</loc>
+    <lastmod>2026-11-17</lastmod>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://genesiscode2026.github.io/velqiris/examples/velqiris-release-gate.yml</loc>
+    <lastmod>2026-11-17</lastmod>
+    <priority>0.6</priority>
+  </url>
 </urlset>
