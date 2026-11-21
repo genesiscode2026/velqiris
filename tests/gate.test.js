@@ -9,32 +9,7 @@ const test = require('node:test');
 const { splitArgsString, parseBooleanInput, runAction } = require('../gate/action-runner');
 
 const repoRoot = path.join(__dirname, '..');
-
-function writeCompliantMockServer(dir) {
-  const file = path.join(dir, 'mock-mcp.js');
-  fs.writeFileSync(
-    file,
-    `'use strict';
-const readline = require('node:readline');
-const rl = readline.createInterface({ input: process.stdin });
-rl.on('line', (line) => {
-  if (!line.trim()) return;
-  const msg = JSON.parse(line);
-  if (msg.id === undefined) return;
-  if (msg.method === 'initialize') {
-    process.stdout.write(JSON.stringify({ jsonrpc: '2.0', id: msg.id, result: { protocolVersion: '2025-06-18', serverInfo: { name: 'mock', version: '1.0.0' } } }) + '\\n');
-  } else if (msg.method === 'tools/list') {
-    process.stdout.write(JSON.stringify({ jsonrpc: '2.0', id: msg.id, result: { tools: [{ name: 'echo_text', description: 'Echo input', inputSchema: { type: 'object', properties: { text: { type: 'string' } }, required: ['text'] } }] } }) + '\\n');
-  } else if (msg.method === 'ping') {
-    process.stdout.write(JSON.stringify({ jsonrpc: '2.0', id: msg.id, result: {} }) + '\\n');
-  } else {
-    process.stdout.write(JSON.stringify({ jsonrpc: '2.0', id: msg.id, error: { code: -32601, message: 'Method or tool not found' } }) + '\\n');
-  }
-});
-`
-  );
-  return file;
-}
+const exampleServerPath = path.join(repoRoot, 'examples', 'safe-mcp-server.js');
 
 test('public action.yml declares required inputs and keeps shell free of input interpolation', () => {
   const yaml = fs.readFileSync(path.join(repoRoot, 'action.yml'), 'utf8');
@@ -56,14 +31,13 @@ test('splitArgsString parses multiline args and flags starting with --', () => {
 
 test('runAction executes free gate end-to-end and logs zero-PII telemetry', async () => {
   const tempDir = fs.mkdtempSync(path.join(os.tmpdir(), 'velqiris-public-gate-'));
-  const serverPath = writeCompliantMockServer(tempDir);
   const outputDir = path.join(tempDir, 'out');
   const ghOutput = path.join(tempDir, 'output.txt');
   const ghSummary = path.join(tempDir, 'summary.md');
 
   const code = await runAction({
     INPUT_COMMAND: process.execPath,
-    INPUT_ARGS: `${serverPath} --stdio`,
+    INPUT_ARGS: `${exampleServerPath} --stdio`,
     INPUT_OUTPUT: outputDir,
     INPUT_FAIL_ON_REVIEW: 'false',
     INPUT_CAMPAIGN_ID: 'public-gate-test',

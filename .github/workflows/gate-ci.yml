@@ -4,17 +4,39 @@ on:
   push:
     branches: [main]
   pull_request:
+  workflow_dispatch:
 
 jobs:
   verify:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+
       - uses: actions/setup-node@v4
         with:
           node-version: "22"
+
       - name: Syntax check & unit tests
         run: |
           node --check gate/mcp-gate.js
           node --check gate/action-runner.js
           node --test tests/*.test.js
+
+      - name: End-to-end Velqiris Free Release Gate check
+        id: e2e
+        uses: ./
+        with:
+          command: node
+          args: ./examples/safe-mcp-server.js --stdio
+          output: ./velqiris-gate-summary
+          fail-on-review: "true"
+
+      - name: Assert Action outputs
+        env:
+          GATE_DISPOSITION: ${{ steps.e2e.outputs.disposition }}
+          GATE_PASSED: ${{ steps.e2e.outputs.passed }}
+          GATE_TOTAL: ${{ steps.e2e.outputs.total }}
+        run: |
+          test "$GATE_DISPOSITION" = "PASS"
+          test "$GATE_PASSED" = "8"
+          test "$GATE_TOTAL" = "8"
