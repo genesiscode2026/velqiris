@@ -72,6 +72,9 @@ test('public site HTML, llms.txt, and workflow contain only approved brands and 
   assert.match(html, /Buy the signed evidence bundle only when you need release proof\./);
   assert.match(html, /Chitara Trading/);
   assert.match(html, /0xC6F86e170411182114FcCdb28793dC76B5e8D144/);
+  assert.match(html, /4qsbTJavjQvHqU5ZoV3UndPBb9RHNp7YZMTNpAiR4oZk/);
+  assert.match(html, /bc1q9m69vwxhn3xkuq97arnnkavj46vj8rk3kssxcr/);
+  assert.match(html, /raQkD9nkG9UYA56aexbfiuhNZGDDLuSWs9/);
   assert.match(html, /page_view.*gate_run.*checkout_open.*settlement_verified/s);
   assert.doesNotMatch(combined, /Chitara Labs|mireaionut|mirea\.trading|severmarcus|Sever Marcus|mircea|chatgpt\.site/i);
 });
