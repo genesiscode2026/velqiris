@@ -71,8 +71,9 @@ function renderSummaryMarkdown(result, campaignId) {
 | :--- | :--- | :--- |
 ${rows}
 
-> Need full **static source analysis** (\`--source\`), **10-pattern secret redaction**, signed **\`manifest.sha256.json\`**, and a **Chitara Trading** commercial license?  
-> Open instant Base USDC checkout (79 USDC): https://x402git.com/genesiscode2026/genesis-mcp-production-readiness?campaign_id=${encodeURIComponent(campaignId)}
+> Need full **static source analysis** (\`--source\`), **10-pattern secret redaction**, a reproducible **\`manifest.sha256.json\`**, and a **Chitara Trading** commercial license?
+>
+> Open the Base USDC checkout: https://x402git.com/genesiscode2026/genesis-mcp-production-readiness?campaign_id=${encodeURIComponent(campaignId)}
 `;
 }
 

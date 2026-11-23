@@ -1,6 +1,7 @@
 'use strict';
 
 const assert = require('node:assert/strict');
+const crypto = require('node:crypto');
 const fs = require('node:fs');
 const os = require('node:os');
 const path = require('node:path');
@@ -63,18 +64,44 @@ test('runAction handles invalid configuration cleanly with exit code 2', async (
   assert.equal(await runAction({ INPUT_COMMAND: '' }), 2);
 });
 
-test('public site HTML, llms.txt, and workflow contain only approved brands and zero personal identifiers', () => {
+test('public site, metadata, and license use the canonical product claims', () => {
   const html = fs.readFileSync(path.join(repoRoot, 'index.html'), 'utf8');
   const llms = fs.readFileSync(path.join(repoRoot, 'llms.txt'), 'utf8');
-  const combined = `${html}\n${llms}`;
+  const readme = fs.readFileSync(path.join(repoRoot, 'README.md'), 'utf8');
+  const license = fs.readFileSync(path.join(repoRoot, 'LICENSE'), 'utf8');
+  const combined = `${html}\n${llms}\n${readme}`;
 
-  assert.match(html, /Run the release gate on your MCP server\./);
-  assert.match(html, /Buy the signed evidence bundle only when you need release proof\./);
+  assert.match(html, /Block risky MCP releases before they ship\./);
+  assert.match(html, /Founding cohort/);
+  assert.match(html, /19 <small>USDC<\/small>/);
   assert.match(html, /Chitara Trading/);
-  assert.match(html, /0xC6F86e170411182114FcCdb28793dC76B5e8D144/);
-  assert.match(html, /4qsbTJavjQvHqU5ZoV3UndPBb9RHNp7YZMTNpAiR4oZk/);
-  assert.match(html, /bc1q9m69vwxhn3xkuq97arnnkavj46vj8rk3kssxcr/);
-  assert.match(html, /raQkD9nkG9UYA56aexbfiuhNZGDDLuSWs9/);
-  assert.match(html, /page_view.*gate_run.*checkout_open.*settlement_verified/s);
+  assert.match(license, /MIT License/);
+  assert.match(combined, /Node\.js 20\+/);
+  assert.match(combined, /SHA-256/);
+  assert.doesNotMatch(combined, /signed evidence|signed bundle/i);
+  assert.doesNotMatch(combined, /acquisition|buyout|no-KYC|escrow/i);
+  assert.doesNotMatch(combined, /0x[a-fA-F0-9]{40}/);
   assert.doesNotMatch(combined, /Chitara Labs|mireaionut|mirea\.trading|severmarcus|Sever Marcus|mircea|chatgpt\.site/i);
+});
+
+test('public demonstrations preserve expected broken and fixed outcomes with valid hashes', () => {
+  const expected = {
+    'schema-drift': { broken: 'FAIL', fixed: 'PASS' },
+    'stdout-framing': { broken: 'REVIEW', fixed: 'PASS' },
+    'secret-exposure': { broken: 'FAIL', fixed: 'PASS' }
+  };
+
+  for (const [name, outcomes] of Object.entries(expected)) {
+    for (const [variant, disposition] of Object.entries(outcomes)) {
+      const dir = path.join(repoRoot, 'demos', name, 'captured', variant);
+      const report = JSON.parse(fs.readFileSync(path.join(dir, 'report.json'), 'utf8'));
+      const manifest = JSON.parse(fs.readFileSync(path.join(dir, 'manifest.sha256.json'), 'utf8'));
+      assert.equal(report.disposition, disposition, `${name}/${variant}`);
+      assert.equal(report.product.version, '2.2.1');
+      for (const [file, metadata] of Object.entries(manifest.files)) {
+        const digest = crypto.createHash('sha256').update(fs.readFileSync(path.join(dir, file))).digest('hex');
+        assert.equal(digest, metadata.sha256, `${name}/${variant}/${file}`);
+      }
+    }
+  }
 });

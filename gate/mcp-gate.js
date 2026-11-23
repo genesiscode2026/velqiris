@@ -4,6 +4,7 @@ const { spawn } = require('node:child_process');
 const { StringDecoder } = require('node:string_decoder');
 
 const PROTOCOL_VERSION = '2025-06-18';
+const FREE_GATE_VERSION = '1.1.0';
 const HIGH_IMPACT_KEYWORDS = /(transfer|payment|payout|withdraw|wallet|sign|delete|destroy|drop|exec|shell|command|spawn|write|chmod|token|secret|credential|password)/i;
 
 class StdioGateClient {
@@ -177,7 +178,7 @@ async function runFreeGate({ command, args = [], requestTimeoutMs = 5000, concur
         const initRes = await client.request('initialize', {
           protocolVersion: PROTOCOL_VERSION,
           capabilities: {},
-          clientInfo: { name: 'velqiris-release-gate', version: '1.0.0' }
+          clientInfo: { name: 'velqiris-release-gate', version: FREE_GATE_VERSION }
         });
         if (initRes.error || !initRes.result) {
           checks.push({ id: 'PROTO_INIT', status: 'FAIL', summary: 'initialize returned JSON-RPC error or empty result.' });
@@ -275,7 +276,7 @@ async function runFreeGate({ command, args = [], requestTimeoutMs = 5000, concur
   return {
     schemaVersion: '1.0',
     tier: 'free-gate',
-    product: { name: 'Velqiris Release Gate', edition: 'free-runtime-gate' },
+    product: { name: 'VELQIRIS MCP Release Gate', edition: 'free-runtime-gate', version: FREE_GATE_VERSION },
     generatedAt: new Date().toISOString(),
     disposition,
     summary: { passed, warned, failed, total: checks.length },

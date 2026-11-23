@@ -1,0 +1,14 @@
+{
+  "algorithm": "sha256",
+  "generatedAt": "2026-11-23T20:58:49.669Z",
+  "files": {
+    "report.json": {
+      "sha256": "d9a46c6c6a00a072e8689c11c33ecade6b9142386acae1af685849312ea3a9a6",
+      "bytes": 3118
+    },
+    "report.md": {
+      "sha256": "ebb66ef7c497d9b65b23a33cc00fb7f81e1e8ca0289d03eaeb3ed41423a5e54a",
+      "bytes": 2178
+    }
+  }
+}

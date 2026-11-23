@@ -1,20 +1,29 @@
-# Velqiris Release Gate (Chitara Trading)
+# VELQIRIS MCP Release Gate — Chitara Trading
 
-> Run the release gate on your MCP server for free in GitHub Actions (`uses: genesiscode2026/velqiris@v1`), then buy the signed SHA-256 evidence bundle (`v2.2.0`, 79 USDC on Base) only when you need release proof. Zero runtime npm dependencies (Node.js >= 20).
+> Deterministic, zero-cloud GitHub Actions release gate for Node.js 20+ MCP stdio servers. The free Action produces PASS / REVIEW / FAIL evidence without sending source code or captured output to a VELQIRIS service.
 
-## Product & Funnel Links
-- Landing page, copy-paste GitHub Action & real benchmarks: https://genesiscode2026.github.io/velqiris/
-- Copy-paste free workflow example: https://genesiscode2026.github.io/velqiris/examples/velqiris-release-gate.yml
-- Funnel telemetry JSON schema (zero PII): https://genesiscode2026.github.io/velqiris/telemetry/funnel-schema.json
-- Self-service commercial bundle checkout (79 USDC on Base Mainnet `eip155:8453`, instant signed `.zip` via X402 Git): https://x402git.com/genesiscode2026/genesis-mcp-production-readiness
-- Free pre-purchase machine manifest (file tree, sizes, scan verdict, SHA-256): https://x402git.com/api/label/genesiscode2026/genesis-mcp-production-readiness
-- X402 machine paywall endpoint: https://x402git.com/api/r/genesiscode2026/genesis-mcp-production-readiness
-- Human-executed assisted pilot (€490 fixed scope): mailto:chitara.trading@proton.me
+## Canonical links
+- Documentation and demonstrations: https://genesiscode2026.github.io/velqiris/
+- Public repository: https://github.com/genesiscode2026/velqiris
+- Free Action: `uses: genesiscode2026/velqiris@v1`
+- Commercial self-hosted bundle: https://x402git.com/genesiscode2026/genesis-mcp-production-readiness
+- Public X402 manifest: https://x402git.com/api/label/genesiscode2026/genesis-mcp-production-readiness
+- X402 payment endpoint: https://x402git.com/api/r/genesiscode2026/genesis-mcp-production-readiness
+- Security contact: mailto:chitara.trading@proton.me
 
-## Dual-Tier Split
-- Free Public Gate (`genesiscode2026/velqiris@v1`): stdio runtime gate (`PROC_START`, `PROTO_INIT`, `TOOLS_SCHEMA`, `TOOL_RISK_REVIEW`, `UNKNOWN_TOOL`, `CONCURRENCY`, `PROTOCOL_PURITY`, `CAPTURE_BOUNDS`) with `PASS` / `REVIEW` / `FAIL` summary.
-- Commercial Signed Bundle (`v2.2.0`, 79 USDC): adds composite GitHub Action uploading `report.json`, `report.md`, and `manifest.sha256.json`, 10-class secret redaction (`anthropic-key`, `openai-key`, `github-token`, `aws-access-key`, `slack-token`, `stripe-key`, `postgres-uri`, `private-key`, `bearer-token`, `jwt`), bounded static source scan (`--source`), local funnel event logging, and Chitara Trading internal commercial license.
+## Free public gate
+Eight runtime checks: `PROC_START`, `PROTO_INIT`, `TOOLS_SCHEMA`, `TOOL_RISK_REVIEW`, `UNKNOWN_TOOL`, `CONCURRENCY`, `PROTOCOL_PURITY`, and `CAPTURE_BOUNDS`. Outputs: `gate-summary.json`, `gate-summary.md`, and the Action disposition.
 
-## Payment, Multi-Chain Crypto & No-KYC Escrow Policy
-- Automated self-service checkout (`79 USDC`): X402 Git on Base Mainnet (`eip155:8453`) to `0xDbd32F7565FFdb901Ea48281777aD03d35bB4b60`, swept 90% every 7 days to Chitara Trading treasury `0xC6F86e170411182114FcCdb28793dC76B5e8D144`.
-- Direct assisted pilot (`€490`) & IP portfolio buyouts (`$3,900` carve-out / `$6,900` buyout at https://velqiris-acquisition.netlify.app): accept EVM assets (`USDC`, `USDT`, `ETH`, `DAI`, `WBTC` across Base, Ethereum, Arbitrum, Optimism, Polygon, BNB, Avalanche -> `0xC6F86e170411182114FcCdb28793dC76B5e8D144`), Solana (`SOL`/`USDC` -> `4qsbTJavjQvHqU5ZoV3UndPBb9RHNp7YZMTNpAiR4oZk`), Bitcoin (`BTC` -> `bc1q9m69vwxhn3xkuq97arnnkavj46vj8rk3kssxcr`), and XRP (`XRP` -> `raQkD9nkG9UYA56aexbfiuhNZGDDLuSWs9`), or `2-of-3` on-chain EVM multisig / smart-contract crypto escrow with zero personal ID KYC (`Chitara Trading` / `Velqiris` only).
+## Commercial bundle
+Adds runtime secret-exposure detection, ten redaction classes, five bounded static source rules plus secret-pattern checks, `report.json`, `report.md`, `manifest.sha256.json`, a self-hosted composite Action, and a Chitara Trading commercial internal-use license.
+
+`manifest.sha256.json` is a checksum manifest. It is not a third-party attestation or cryptographic signature over the ZIP archive.
+
+## Exact scope
+VELQIRIS evaluates observable local stdio behavior and bounded source patterns. It is not a penetration test, formal compliance certification, SBOM/dependency audit, or guarantee of zero vulnerabilities.
+
+## Agent purchase flow
+1. Read the public manifest and product page.
+2. Request the X402 payment endpoint and inspect its HTTP 402 payment requirements.
+3. Pay the quoted USDC amount on the advertised Base network only after verifying the recipient and current offer.
+4. Fetch the authorized release and verify the delivered SHA-256 evidence manifest.

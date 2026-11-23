@@ -1,0 +1,112 @@
+{
+  "schemaVersion": "1.0",
+  "generatedAt": "2026-11-23T20:58:49.669Z",
+  "product": {
+    "name": "Velqiris",
+    "version": "2.2.1"
+  },
+  "disposition": "PASS",
+  "target": {
+    "executable": "node",
+    "argumentCount": 1,
+    "sourceIncluded": false
+  },
+  "runtime": {
+    "schemaVersion": 1,
+    "product": {
+      "name": "Velqiris",
+      "version": "2.2.1"
+    },
+    "generatedAt": "2026-11-23T20:58:49.846Z",
+    "scope": "Runtime stdio readiness checks; not a penetration test or formal certification.",
+    "target": {
+      "executable": "node",
+      "argumentCount": 1
+    },
+    "overallStatus": "PASS",
+    "summary": {
+      "passed": 9,
+      "failed": 0,
+      "warned": 0,
+      "total": 9
+    },
+    "checks": [
+      {
+        "id": "PROC_START",
+        "name": "Process startup and stdio binding",
+        "status": "PASS",
+        "details": "Process spawned without a shell and remained alive through the startup grace period."
+      },
+      {
+        "id": "PROTO_INIT",
+        "name": "MCP protocol handshake",
+        "status": "PASS",
+        "details": "Server 'secret-exposure-fixed' negotiated protocol '2025-06-18'.",
+        "observed": {
+          "protocolVersion": "2025-06-18",
+          "serverName": "secret-exposure-fixed",
+          "serverVersion": "1.0.0"
+        }
+      },
+      {
+        "id": "TOOLS_SCHEMA",
+        "name": "Tool discovery and schema structure",
+        "status": "PASS",
+        "details": "Discovered 1 tool(s) with structurally valid input schemas.",
+        "observed": {
+          "toolCount": 1,
+          "toolNames": [
+            "echo_text"
+          ]
+        }
+      },
+      {
+        "id": "TOOL_RISK_REVIEW",
+        "name": "High-impact tool metadata review",
+        "status": "PASS",
+        "details": "No high-impact capability keywords were identified in tool metadata.",
+        "observed": {
+          "reviewItems": []
+        }
+      },
+      {
+        "id": "UNKNOWN_TOOL",
+        "name": "Unknown tool rejection",
+        "status": "PASS",
+        "details": "Server returned a JSON-RPC error for an unknown tool."
+      },
+      {
+        "id": "CONCURRENCY",
+        "name": "Concurrent request correlation",
+        "status": "PASS",
+        "details": "Resolved 5 concurrent requests without timeout or identifier mismatch."
+      },
+      {
+        "id": "PROTOCOL_PURITY",
+        "name": "Stdout protocol purity",
+        "status": "PASS",
+        "details": "No non-JSON stdout lines were observed.",
+        "observed": {
+          "noiseLineCount": 0,
+          "sample": []
+        }
+      },
+      {
+        "id": "SECRET_EXPOSURE",
+        "name": "Runtime secret exposure scan",
+        "status": "PASS",
+        "details": "No supported credential patterns were detected in captured stdout or stderr.",
+        "observed": {
+          "patternIds": []
+        }
+      },
+      {
+        "id": "CAPTURE_BOUNDS",
+        "name": "Evidence capture bounds",
+        "status": "PASS",
+        "details": "Captured output stayed within configured byte limits."
+      }
+    ]
+  },
+  "staticAnalysis": null
+}

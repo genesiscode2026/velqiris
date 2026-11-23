@@ -1,5 +1,5 @@
 name: "Velqiris Release Gate"
-description: "Free local-first MCP stdio runtime release gate (PASS / REVIEW / FAIL) by Chitara Trading. Upgrade to the commercial bundle for static audit, 10-pattern secret redaction, and signed SHA-256 evidence."
+description: "Deterministic, self-hosted MCP stdio release gate with PASS / REVIEW / FAIL evidence."
 author: "Chitara Trading"
 branding:
   icon: "shield"
