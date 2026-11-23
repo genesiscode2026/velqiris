@@ -1,9 +1,9 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-11-23T20:58:49.380Z",
+  "generatedAt": "2026-11-23T21:42:18.651Z",
   "product": {
     "name": "Velqiris",
-    "version": "2.2.1"
+    "version": "2.2.2"
   },
   "disposition": "FAIL",
   "target": {
@@ -15,9 +15,9 @@
     "schemaVersion": 1,
     "product": {
       "name": "Velqiris",
-      "version": "2.2.1"
+      "version": "2.2.2"
     },
-    "generatedAt": "2026-11-23T20:58:49.757Z",
+    "generatedAt": "2026-11-23T21:42:18.765Z",
     "scope": "Runtime stdio readiness checks; not a penetration test or formal certification.",
     "target": {
       "executable": "node",

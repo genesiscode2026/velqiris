@@ -72,8 +72,9 @@ test('public site, metadata, and license use the canonical product claims', () =
   const combined = `${html}\n${llms}\n${readme}`;
 
   assert.match(html, /Block risky MCP releases before they ship\./);
-  assert.match(html, /Founding cohort/);
-  assert.match(html, /19 <small>USDC<\/small>/);
+  assert.match(html, /Standard commercial license/);
+  assert.match(html, /29 <small>USDC<\/small>/);
+  assert.doesNotMatch(html, /Founding cohort|19 USDC|49 USDC|79 USDC/);
   assert.match(html, /Chitara Trading/);
   assert.match(license, /MIT License/);
   assert.match(combined, /Node\.js 20\+/);
@@ -97,7 +98,7 @@ test('public demonstrations preserve expected broken and fixed outcomes with val
       const report = JSON.parse(fs.readFileSync(path.join(dir, 'report.json'), 'utf8'));
       const manifest = JSON.parse(fs.readFileSync(path.join(dir, 'manifest.sha256.json'), 'utf8'));
       assert.equal(report.disposition, disposition, `${name}/${variant}`);
-      assert.equal(report.product.version, '2.2.1');
+      assert.equal(report.product.version, '2.2.2');
       for (const [file, metadata] of Object.entries(manifest.files)) {
         const digest = crypto.createHash('sha256').update(fs.readFileSync(path.join(dir, file))).digest('hex');
         assert.equal(digest, metadata.sha256, `${name}/${variant}/${file}`);
